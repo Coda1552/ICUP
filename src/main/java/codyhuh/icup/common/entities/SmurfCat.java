@@ -23,6 +23,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
@@ -86,9 +87,10 @@ public class SmurfCat extends AbstractVillager {
         }
 
     }
+
     public static final Int2ObjectMap<VillagerTrades.ItemListing[]> SMURF_CAT_TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
-            1, new VillagerTrades.ItemListing[]{new ItemsForCurrency(Items.BROWN_MUSHROOM, 1, 3, 5, 1), new ItemsForCurrency(Items.RED_MUSHROOM, 1, 3, 5, 1), new ItemsForCurrency(Items.GLOWSTONE, 2, 1, 5, 1), new ItemsForCurrency(Items.APPLE, 1, 4, 5, 1), new ItemsForCurrency(Items.FERN, 1, 5, 12, 1), new ItemsForCurrency(Items.SUGAR_CANE, 1, 6, 8, 1), new ItemsForCurrency(Items.PUMPKIN, 1, 4, 4, 1), new ItemsForCurrency(Items.KELP, 1, 4, 12, 1), new ItemsForCurrency(Items.CACTUS, 1, 2, 8, 1), new ItemsForCurrency(Items.WHEAT_SEEDS, 1, 1, 12, 1), new ItemsForCurrency(Items.BEETROOT_SEEDS, 1, 1, 12, 1), new ItemsForCurrency(Items.PUMPKIN_SEEDS, 1, 1, 12, 1), new ItemsForCurrency(Items.MELON_SEEDS, 1, 1, 12, 1), new ItemsForCurrency(Items.ACACIA_SAPLING, 5, 1, 8, 1), new ItemsForCurrency(Items.BIRCH_SAPLING, 5, 1, 8, 1), new ItemsForCurrency(Items.DARK_OAK_SAPLING, 5, 1, 8, 1), new ItemsForCurrency(Items.JUNGLE_SAPLING, 5, 1, 8, 1), new ItemsForCurrency(Items.OAK_SAPLING, 5, 1, 8, 1), new ItemsForCurrency(Items.SPRUCE_SAPLING, 5, 1, 8, 1), new ItemsForCurrency(Items.CHERRY_SAPLING, 5, 1, 8, 1), new ItemsForCurrency(Items.MANGROVE_PROPAGULE, 5, 1, 8, 1), new ItemsForCurrency(Items.VINE, 1, 3, 12, 1), new ItemsForCurrency(Items.LILY_PAD, 1, 4, 5, 1)},
-            2, new VillagerTrades.ItemListing[]{new ItemsForCurrency(Items.MELON_SLICE, 1, 18, 5, 1), new ItemsForCurrency(Items.TROPICAL_FISH_BUCKET, 5, 1, 4, 1), new ItemsForCurrency(Items.PUFFERFISH_BUCKET, 5, 1, 4, 1)}));
+            1, new VillagerTrades.ItemListing[]{new ItemsForCurrency(Items.BROWN_MUSHROOM, 1, 3, 5, 1), new ItemsForCurrency(Items.RED_MUSHROOM, 1, 3, 5, 1), new EnchantedItemForEmeralds(Items.BOOK, 5, 1, 5, 1), new ItemsForCurrency(Items.ENCHANTED_GOLDEN_APPLE, 3, 1, 3, 1), new ItemsForCurrency(Items.GOLDEN_APPLE, 1, 2, 5, 1), new ItemsForCurrency(Items.NAME_TAG, 1, 2, 5, 1), new ItemsForCurrency(Items.SADDLE, 2, 1, 5, 1), new ItemsForCurrency(Items.TOTEM_OF_UNDYING, 4, 1, 5, 1), new ItemsForCurrency(Items.ENDER_EYE, 4, 1, 5, 1), new ItemsForCurrency(Items.EXPERIENCE_BOTTLE, 1, 2, 5, 1)},
+            2, new VillagerTrades.ItemListing[]{new ItemsForCurrency(Items.NAUTILUS_SHELL, 2, 1, 5, 1), new ItemsForCurrency(Items.HEART_OF_THE_SEA, 2, 1, 4, 1), new ItemsForCurrency(Items.SCUTE, 3, 1, 4, 1), new ItemsForCurrency(Items.HONEYCOMB, 1, 3, 4, 1), new ItemsForCurrency(ModItems.SKEWERED_SNAIL.get(), 12, 1, 1, 2), new ItemsForMiscCurrency(ModItems.BLUEBERRY_CAT.get(), Items.BROWN_MUSHROOM_BLOCK, 32, 1, 5, 2), new ItemsForMiscCurrency(ModItems.BLUEBERRY_CAT.get(), Items.RED_MUSHROOM_BLOCK, 32, 1, 1, 2)}));
 
     @Override
     protected void updateTrades() {
@@ -177,6 +179,64 @@ public class SmurfCat extends AbstractVillager {
 
         public MerchantOffer getOffer(Entity p_219699_, RandomSource p_219700_) {
             return new MerchantOffer(new ItemStack(ModItems.BLUEBERRY_CAT.get(), this.cost), new ItemStack(this.itemStack.getItem(), this.numberOfItems), this.maxUses, this.villagerXp, this.priceMultiplier);
+        }
+    }
+
+    static class ItemsForMiscCurrency implements VillagerTrades.ItemListing {
+        private final ItemStack itemStack;
+        private final ItemStack currency;
+        private final int cost;
+        private final int numberOfItems;
+        private final int maxUses;
+        private final int villagerXp;
+        private final float priceMultiplier;
+
+        public ItemsForMiscCurrency(Item item, Item currency, int cost, int numberOfItems, int maxUses, int xpGranted) {
+            this(new ItemStack(item), new ItemStack(currency), cost, numberOfItems, maxUses, xpGranted);
+        }
+
+        public ItemsForMiscCurrency(ItemStack stack, ItemStack currency, int cost, int numberOfItems, int maxUses, int xpGranted) {
+            this(stack, currency, cost, numberOfItems, maxUses, xpGranted, 0.05F);
+        }
+
+        public ItemsForMiscCurrency(ItemStack stack, ItemStack currency, int cost, int numberOfItems, int maxUses, int xpGranted, float priceMultiplier) {
+            this.itemStack = stack;
+            this.currency = currency;
+            this.cost = cost;
+            this.numberOfItems = numberOfItems;
+            this.maxUses = maxUses;
+            this.villagerXp = xpGranted;
+            this.priceMultiplier = priceMultiplier;
+        }
+
+        public MerchantOffer getOffer(Entity p_219699_, RandomSource p_219700_) {
+            return new MerchantOffer(new ItemStack(this.currency.getItem(), this.cost), new ItemStack(this.itemStack.getItem(), this.numberOfItems), this.maxUses, this.villagerXp, this.priceMultiplier);
+        }
+    }
+
+    static class EnchantedItemForEmeralds implements VillagerTrades.ItemListing {
+        private final ItemStack itemStack;
+        private final int cost;
+        private final int maxUses;
+        private final int villagerXp;
+        private final float priceMultiplier;
+
+        public EnchantedItemForEmeralds(Item item, int cost, int maxUses, int xp) {
+            this(item, cost, maxUses, xp, 0.05F);
+        }
+
+        public EnchantedItemForEmeralds(Item item, int cost, int maxUses, int xp, float priceMultiplier) {
+            this.itemStack = new ItemStack(item);
+            this.cost = cost;
+            this.maxUses = maxUses;
+            this.villagerXp = xp;
+            this.priceMultiplier = priceMultiplier;
+        }
+
+        public MerchantOffer getOffer(Entity entity, RandomSource rand) {
+            ItemStack itemstack = EnchantmentHelper.enchantItem(rand, new ItemStack(this.itemStack.getItem()), 30, false);
+            ItemStack itemstack1 = new ItemStack(ModItems.BLUEBERRY_CAT.get(), 5);
+            return new MerchantOffer(itemstack1, itemstack, this.maxUses, this.villagerXp, this.priceMultiplier);
         }
     }
 

@@ -1,0 +1,24 @@
+{
+	"parent": "forge:item/default",
+	"loader": "forge:separate_transforms",
+	"base": {
+		"parent": "icup:item/skewered_snail_handheld",
+		"textures": {
+			"layer0": "icup:item/skewered_snail"
+		}
+	},
+	"perspectives": {
+		"gui": {
+			"parent": "icup:item/skewered_snail_gui",
+			"textures": {
+				"layer0": "icup:item/skewered_snail"
+			}
+		},
+		"fixed": {
+			"parent": "icup:item/skewered_snail_gui",
+			"textures": {
+				"layer0": "icup:item/skewered_snail"
+			}
+		}
+	}
+}

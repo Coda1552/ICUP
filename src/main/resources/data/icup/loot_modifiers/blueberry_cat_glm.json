@@ -1,0 +1,9 @@
+{
+  "type": "icup:blueberry_cat_glm",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:gameplay/cat_morning_gift"
+    }
+  ]
+}

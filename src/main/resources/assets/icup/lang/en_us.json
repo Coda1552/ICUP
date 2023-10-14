@@ -3,6 +3,9 @@
 
   "entity.icup.smurf_cat": "Smurf Cat",
 
+  "menu.icup.skewered_snail": "Skewered Snail",
+
   "item.icup.blueberry_cat": "Blueberry Cat",
+  "item.icup.skewered_snail": "Skewered Snail",
   "item.icup.smurf_cat_spawn_egg": "Smurf Cat Spawn Egg"
 }

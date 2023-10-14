@@ -16,6 +16,7 @@ public class SmurfCatModel<T extends SmurfCat> extends EntityModel<T> {
 	private final ModelPart rArm;
 	private final ModelPart lLeg;
 	private final ModelPart rLeg;
+	private final ModelPart head;
 
 	public SmurfCatModel(ModelPart root) {
 		this.body = root.getChild("body");
@@ -23,6 +24,7 @@ public class SmurfCatModel<T extends SmurfCat> extends EntityModel<T> {
 		this.rArm = body.getChild("rArm");
 		this.lLeg = body.getChild("lLeg");
 		this.rLeg = body.getChild("rLeg");
+		this.head = body.getChild("head");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -51,6 +53,8 @@ public class SmurfCatModel<T extends SmurfCat> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.head.xRot = headPitch * ((float)Math.PI / 180F);
+		this.head.yRot = netHeadYaw * ((float)Math.PI / 180F);
 		this.rArm.xRot = Mth.cos(-1.0F + limbSwing * 0.6662F + (float)Math.PI) * 2.0F * limbSwingAmount * 0.5F;
 		this.lArm.xRot = Mth.cos(-1.0F + limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
 		this.rLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;

@@ -1,9 +1,7 @@
 package codyhuh.icup;
 
 import codyhuh.icup.common.entities.SmurfCat;
-import codyhuh.icup.registry.ModEntities;
-import codyhuh.icup.registry.ModItems;
-import codyhuh.icup.registry.ModTabs;
+import codyhuh.icup.registry.*;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -19,6 +17,8 @@ public class ICUP {
         ModItems.ITEMS.register(bus);
         ModTabs.TABS.register(bus);
         ModEntities.ENTITIES.register(bus);
+        ModMenus.MENUS.register(bus);
+        ModLootModifiers.LOOT_MODIFIERS.register(bus);
 
         bus.addListener(this::createAttributes);
     }
